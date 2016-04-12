@@ -10,8 +10,8 @@ abstract class Tree implements Comparable<Tree> {
 abstract  int mini();
 abstract  int maxi();
 abstract int maxi2(int joueur);
-abstract public Tree minimax();
-abstract public Tree negamax();
-
+abstract public Tree minimax(); //renvoient le coup gagnant mais peut être modifier pour juste renvoyer 
+abstract public Tree negamax();// victoire, nul ou défaite
+abstract public int AlphaBeta(int joueur);
 
 }

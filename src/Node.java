@@ -26,7 +26,7 @@ public class Node extends Tree{
 	@Override
 	int maxi() {
 
-		int g=-2;
+		int g=-2; //ou -infini idem
 		for (Tree c:this.children){
 			c.gain=c.mini();
 			//on retient le gain min d'en dessous
@@ -74,5 +74,91 @@ public class Node extends Tree{
 			return null;
 	}
 
+	
+	//AlphaBeta avec "amelioration" style negamax. 
+	//Contrairement aux algo précédents, ici on ne modifie pas les gain en remontant l'arbre
+	// Pour l'instant de fonctionne pas
+	
+	/*public int AlphaBetaTest(int alpha, int beta,int joueur) { 
+		int bestpossible=-2;  //ou -infini, idem
+		
+		for (Tree child:children){
+			int g=-child.AlphaBetaTest(-beta,-alpha,joueur);
+			if (g>bestpossible){
+				bestpossible=g;
+					if (bestpossible>alpha){
+						alpha=bestpossible;
+							if (alpha>=beta) return bestpossible;
+					}
+			}
+		}
+		System.out.println(bestpossible);
+		return bestpossible;
+	}
+	
+	*/
+	
+	
+	
+	
+	/* Autre tentative, qui est plus dans la mentalité de ce que j'ai fait avant
+	 Si le joueur vaut 1, il doit maximiser, et si un de ses fils a un gain de &, inutile de visiter les autres,
+	le sien est forcement 1
+ 	De meme, si joueur vaut -1, ie le noeud doit minimiser son gain, alors, si un de ses fils a un noeud de gain -1, inutile
+	d'aller visiter les autres. */
+	
+	//Je reprends l'algo fait pour negamax en l'améliorant simplement
+	@Override
+	public int AlphaBeta(int joueur) {
+		
+		
+		int g=-2;	
+		for (Tree child:children){
+			child.gain=child.AlphaBeta(-joueur);
+			if (joueur*child.gain>g) g=joueur*child.gain;
+			
+			//lignes supps pour amélioration alpha-beta
+			if (g==1){
+				g=joueur*g;
+				this.gain=g;
+				return g;
+			}
+			//fin amélioration
+			//grossièrement, on a court-circuité l'lglo,
+			//si on atteint la meilleure valeur possible(ie 1 pour un node max, -1 pour un min, ie joueur*1, inutile de visiter le reste des fils
+			
+		}
+		g=joueur*g;
+		this.gain=g;
+		
+		return g;
+		
+		
+		
+		
+	
+	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

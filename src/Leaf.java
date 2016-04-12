@@ -22,15 +22,20 @@
 
 	@Override
 	int maxi2(int joueur) {
-		// TODO Auto-generated method stub
 		 return this.gain;
 	
 	}
 
 	@Override
 	public Tree negamax() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int AlphaBeta(int joueur) {
+		System.out.println("visited leaf +1");
+		return this.gain;
+	
 	}
 
 	

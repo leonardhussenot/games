@@ -6,10 +6,10 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-	Leaf ps1= new Leaf(0);
-	Leaf ps2= new Leaf(0);
+	Leaf ps1= new Leaf(-1);
+	Leaf ps2= new Leaf(1);
 	Leaf ps3= new Leaf(1);
-	Leaf ps4= new Leaf(-1);
+	Leaf ps4= new Leaf(1);
 	Leaf ps5= new Leaf(1);
 	Leaf ps6= new Leaf(-1);
 		
@@ -36,9 +36,10 @@ public class Test {
 	b.add(n4);
 	
 	Node boss=new Node(b);
-	boss.negamax();
-	System.out.println(boss.gain);
 	
+	int res=boss.AlphaBeta(1);
+	System.out.println(res);
+		 	  	
 	
 			
 	}
