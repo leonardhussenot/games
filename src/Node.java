@@ -75,30 +75,40 @@ public class Node extends Tree{
 	}
 
 	
-	//AlphaBeta avec "amelioration" style negamax. 
+	
 	//Contrairement aux algo précédents, ici on ne modifie pas les gain en remontant l'arbre
 	// Pour l'instant de fonctionne pas
 	
-	/*public int AlphaBetaTest(int alpha, int beta,int joueur) { 
-		int bestpossible=-2;  //ou -infini, idem
+	public int AlphaBetaTest(int alpha, int beta,int joueur) { 
 		
-		for (Tree child:children){
-			int g=-child.AlphaBetaTest(-beta,-alpha,joueur);
-			if (g>bestpossible){
-				bestpossible=g;
-					if (bestpossible>alpha){
-						alpha=bestpossible;
-							if (alpha>=beta) return bestpossible;
-					}
-			}
+ int valcurr=-10000;
+		
+		if (joueur==-1){
+		 valcurr=1000;
+			for (Tree child:this.children){
+				valcurr=Math.min(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
+				if (alpha>=valcurr) return valcurr; //coupure alpha
+				beta=Math.min(beta,valcurr);		
+			}		
 		}
-		System.out.println(bestpossible);
-		return bestpossible;
-	}
+		if (joueur==1){
+		valcurr=-1000;
+			for (Tree child:this.children){
+				valcurr=Math.max(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
+				if (valcurr>=beta) return valcurr; //coupure beta
+				alpha=Math.max(alpha,valcurr);		
+			}		
+		}
+		return valcurr;
 	
-	*/
+}
+	
+
 	
 	
+	
+	/*algo en dessous pas vraiment alphabeta en réalité mais une amélioration possible qui exploite le fait que les gains 
+	 de nos jeux sont juste -1 0 ou 1	 */
 	
 	
 	/* Autre tentative, qui est plus dans la mentalité de ce que j'ai fait avant
@@ -107,14 +117,17 @@ public class Node extends Tree{
  	De meme, si joueur vaut -1, ie le noeud doit minimiser son gain, alors, si un de ses fils a un noeud de gain -1, inutile
 	d'aller visiter les autres. */
 	
+
+	
+	//En fait c'est pas alpha beta mais c'est quand même interessant
 	//Je reprends l'algo fait pour negamax en l'améliorant simplement
 	@Override
-	public int AlphaBeta(int joueur) {
+	public int coupureleo(int joueur) {
 		
 		
 		int g=-2;	
 		for (Tree child:children){
-			child.gain=child.AlphaBeta(-joueur);
+			child.gain=child.coupureleo(-joueur);
 			if (joueur*child.gain>g) g=joueur*child.gain;
 			
 			//lignes supps pour amélioration alpha-beta
@@ -124,7 +137,7 @@ public class Node extends Tree{
 				return g;
 			}
 			//fin amélioration
-			//grossièrement, on a court-circuité l'lglo,
+			//grossièrement, on a court-circuité l'alglo,
 			//si on atteint la meilleure valeur possible(ie 1 pour un node max, -1 pour un min, ie joueur*1, inutile de visiter le reste des fils
 			
 		}

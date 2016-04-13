@@ -8,9 +8,9 @@ public class Test {
 		
 	Leaf ps1= new Leaf(-1);
 	Leaf ps2= new Leaf(1);
-	Leaf ps3= new Leaf(1);
-	Leaf ps4= new Leaf(1);
-	Leaf ps5= new Leaf(1);
+	Leaf ps3= new Leaf(0);
+	Leaf ps4= new Leaf(0);
+	Leaf ps5= new Leaf(0);
 	Leaf ps6= new Leaf(-1);
 		
 	Collection<Tree> f1 = new Stack<Tree>(); 
@@ -37,8 +37,10 @@ public class Test {
 	
 	Node boss=new Node(b);
 	
-	int res=boss.AlphaBeta(1);
+	int res=boss.AlphaBetaTest(-4,4,1);
 	System.out.println(res);
+	
+	
 		 	  	
 	
 			

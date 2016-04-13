@@ -32,10 +32,16 @@
 	}
 
 	@Override
-	public int AlphaBeta(int joueur) {
+	public int coupureleo(int joueur) {
 		System.out.println("visited leaf +1");
 		return this.gain;
 	
+	}
+
+	@Override
+	public int AlphaBetaTest(int alpha, int beta, int joueur) {
+		System.out.println("visited leaf +1");
+		return gain;
 	}
 
 	
