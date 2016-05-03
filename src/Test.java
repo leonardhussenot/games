@@ -23,6 +23,13 @@ public class Test {
 	f4.add(ps5);
 	f4.add(ps6);
 	
+	
+	// Avec la dernière modif : classe Node abstraite qui possède une méthode children() pour calculer les coups suivants possibles, 
+	//construire un arbre test devient différent ! 
+	
+	//TODO :refléchir pour les tests à comment implémenter ca...
+	
+	/*
 	Node n1=new Node(f1);
 	Node n2=new Node(f2);
 	Node n4=new Node(f4);
@@ -41,9 +48,10 @@ public class Test {
 	System.out.println(res);
 	
 	
-		 	  	
+	*/	 	  	
 	
 			
 	}
 
 }
+

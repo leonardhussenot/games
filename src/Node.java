@@ -1,20 +1,23 @@
 import java.util.Collection;
 
 
-public class Node extends Tree{
+public abstract class Node extends Tree{
 
-	Collection<Tree> children;
+	abstract Collection<Tree> children();
+	
+	
 
 
 	Node(Collection<Tree> t){
 		gain=-2;
-		children=t;
+		
 	}
 
 	@Override
 	int mini() {
 		int g=2;
-		for (Tree c:this.children){
+		Collection<Tree> children=this.children();
+		for (Tree c:children){
 			c.gain=c.maxi();
 			//on retient le gain min d'en dessous
 			if (c.gain<g){g=c.gain;}
@@ -27,7 +30,8 @@ public class Node extends Tree{
 	int maxi() {
 
 		int g=-2; //ou -infini idem
-		for (Tree c:this.children){
+		Collection<Tree> children=this.children();
+		for (Tree c:children){
 			c.gain=c.mini();
 			//on retient le gain min d'en dessous
 			if (c.gain>g){g=c.gain;}
@@ -40,6 +44,7 @@ public class Node extends Tree{
 	public Tree minimax() {
 		int g=this.maxi();
 
+		Collection<Tree> children=this.children();
 		for (Tree child:children){
 			if (child.gain==g){return child;}
 		}
@@ -52,6 +57,7 @@ public class Node extends Tree{
 	//les valeurs "vues" par l'adversaire sont donc multipliées par -1 et il en cherche le max. 
 	int maxi2(int joueur) {
 		int g=-2;	
+		Collection<Tree> children=this.children();
 		for (Tree child:children){
 			child.gain=child.maxi2(-joueur);
 			if (joueur*child.gain>g) g=joueur*child.gain;
@@ -67,7 +73,8 @@ public class Node extends Tree{
 		// TODO Auto-generated method stub
 		 int res=this.maxi2(1);
 		 
-		 for (Tree child:children){
+		 Collection<Tree> children=this.children();
+			for (Tree child:children){
 				if (child.gain==res){return child;}
 			}
 
@@ -85,7 +92,8 @@ public class Node extends Tree{
 		
 		if (joueur==-1){
 		 valcurr=1000;
-			for (Tree child:this.children){
+		 Collection<Tree> children=this.children();
+			for (Tree child:children){
 				valcurr=Math.min(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
 				if (alpha>=valcurr) return valcurr; //coupure alpha
 				beta=Math.min(beta,valcurr);		
@@ -93,7 +101,8 @@ public class Node extends Tree{
 		}
 		if (joueur==1){
 		valcurr=-1000;
-			for (Tree child:this.children){
+		 Collection<Tree> children=this.children();
+			for (Tree child:children){
 				valcurr=Math.max(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
 				if (valcurr>=beta) return valcurr; //coupure beta
 				alpha=Math.max(alpha,valcurr);		
@@ -126,7 +135,8 @@ public class Node extends Tree{
 		
 		
 		int g=-2;	
-		for (Tree child:children){
+		 Collection<Tree> children=this.children();
+			for (Tree child:children){
 			child.gain=child.coupureleo(-joueur);
 			if (joueur*child.gain>g) g=joueur*child.gain;
 			
