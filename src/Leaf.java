@@ -40,7 +40,12 @@
 
 	@Override
 	public int AlphaBetaTest(int alpha, int beta, int joueur) {
-		System.out.println("visited leaf +1");
+		//System.out.println("visited leaf +1");
+		return gain;
+	}
+	@Override
+	public int AlphaBeta(int alpha, int beta) {
+		//System.out.println("visited leaf +1");
 		return gain;
 	}
 

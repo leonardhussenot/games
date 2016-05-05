@@ -23,6 +23,13 @@ public class Test {
 	f4.add(ps5);
 	f4.add(ps6);
 	
+	long bid = 5;
+	long bid2 = 2;
+	long truc = bid | bid2;
+	
+	
+	
+
 	
 	// Avec la dernière modif : classe Node abstraite qui possède une méthode children() pour calculer les coups suivants possibles, 
 	//construire un arbre test devient différent ! 

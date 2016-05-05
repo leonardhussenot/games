@@ -15,29 +15,29 @@ public abstract class Node extends Tree{
 
 	@Override
 	int mini() {
-		int g=2;
+		this.gain=2;
 		Collection<Tree> children=this.children();
 		for (Tree c:children){
 			c.gain=c.maxi();
 			//on retient le gain min d'en dessous
-			if (c.gain<g){g=c.gain;}
+			if (c.gain<this.gain){this.gain=c.gain;}
 		}
-		this.gain=g;
-		return g;
+		return this.gain;
 	}
 
 	@Override
 	int maxi() {
-
-		int g=-2; //ou -infini idem
+		this.gain=-2;
+		//int g=-2; //ou -infini idem
 		Collection<Tree> children=this.children();
 		for (Tree c:children){
 			c.gain=c.mini();
 			//on retient le gain min d'en dessous
-			if (c.gain>g){g=c.gain;}
+			if (c.gain>this.gain){this.gain=c.gain;}
 		}
-		this.gain=g;
-		return g;
+		//this.gain=g;
+		//return g;
+		return this.gain;
 	}
 
 	@Override
@@ -55,11 +55,11 @@ public abstract class Node extends Tree{
 	@Override
 	//for negamax! On contrôle si on est Joueur ou adversaire par la variable joueur qui vaut 1 si on est le joueur, -1 l'adversaire
 	//les valeurs "vues" par l'adversaire sont donc multipliées par -1 et il en cherche le max. 
-	int maxi2(int joueur) {
+	int maxi_for_negamax(int joueur) {
 		int g=-2;	
 		Collection<Tree> children=this.children();
 		for (Tree child:children){
-			child.gain=child.maxi2(-joueur);
+			child.gain=child.maxi_for_negamax(-joueur);
 			if (joueur*child.gain>g) g=joueur*child.gain;
 		}
 		g=joueur*g;
@@ -71,7 +71,7 @@ public abstract class Node extends Tree{
 	@Override
 	public Tree negamax() {
 		// TODO Auto-generated method stub
-		 int res=this.maxi2(1);
+		 int res=this.maxi_for_negamax(1);
 		 
 		 Collection<Tree> children=this.children();
 			for (Tree child:children){
@@ -85,7 +85,27 @@ public abstract class Node extends Tree{
 	
 	//Contrairement aux algo précédents, ici on ne modifie pas les gain en remontant l'arbre
 	// Pour l'instant de fonctionne pas
-	
+	@Override
+	public int AlphaBeta(int alpha, int beta) {
+		int best = -2;
+		int v;
+		for (Tree c:this.children()) {
+			v=-c.AlphaBeta(-beta,-alpha);
+			if (v>best) {
+				best=v;
+				if (best>alpha) {
+					alpha=best;
+					if (alpha>=beta) {
+						return(best);
+					}
+				}
+			
+			}
+			
+		}
+		return(best);
+	}
+	/*
 	public int AlphaBetaTest(int alpha, int beta,int joueur) { 
 		
  int valcurr=-10000;
@@ -112,7 +132,7 @@ public abstract class Node extends Tree{
 	
 }
 	
-
+*/
 	
 	
 	
@@ -130,8 +150,9 @@ public abstract class Node extends Tree{
 	
 	//En fait c'est pas alpha beta mais c'est quand même interessant
 	//Je reprends l'algo fait pour negamax en l'améliorant simplement
-	@Override
-	public int coupureleo(int joueur) {
+
+	
+/*	public int coupureleo(int joueur) {
 		
 		
 		int g=-2;	
@@ -163,25 +184,8 @@ public abstract class Node extends Tree{
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	*/
+
 	
 	
 }
