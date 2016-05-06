@@ -4,31 +4,28 @@ import java.util.Stack;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ExceptionEnd {
 		
-	Leaf ps1= new Leaf(-1);
-	Leaf ps2= new Leaf(1);
-	Leaf ps3= new Leaf(0);
-	Leaf ps4= new Leaf(0);
-	Leaf ps5= new Leaf(0);
-	Leaf ps6= new Leaf(-1);
-		
-	Collection<Tree> f1 = new Stack<Tree>(); 
-	Collection<Tree> f2 = new Stack<Tree>(); 
-	Collection<Tree> f4 = new Stack<Tree>(); 
-	f1.add(ps1);
-	f1.add(ps2);
-	f2.add(ps3);
-	f2.add(ps4);
-	f4.add(ps5);
-	f4.add(ps6);
 	
 	long bid = 5;
 	long bid2 = 2;
+	long t=16;
+	
+	
 	long truc = bid | bid2;
+	//Tictactoe essai = new Tictactoe( 609,1046 ,3, 3, 3, 1); //match nul
+	//Tictactoe essai = new Tictactoe(82,2084,3, 3, 3, 1); //défaite
+	Tictactoe essai = new Tictactoe( 0,0 ,3, 3, 3, 1); //match nul
 	
-	
-	
+	System.out.println(essai.win());
+	System.out.println(essai.end());
+
+
+	System.out.println("le résultat par minimax est "+essai.minimax());
+	System.out.println("le résultat par negamax est "+essai.negamax());
+	System.out.println("le résultat par Alpha-Beta est "+essai.AlphaBeta(-100, 100));
+	System.out.println("le résultat par Alpha-BetaTEST est "+essai.AlphaBetaTest(-100, 100,1));
+}
 
 	
 	// Avec la dernière modif : classe Node abstraite qui possède une méthode children() pour calculer les coups suivants possibles, 
@@ -58,7 +55,6 @@ public class Test {
 	*/	 	  	
 	
 			
-	}
 
 }
 
