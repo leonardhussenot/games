@@ -1,4 +1,5 @@
 
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -6,7 +7,7 @@ public class Tictactoe extends Tree{
 	long joueur;
 	long opposant;
 	final int k, L, H;
-	long full;
+	final long full;
 
 	public Tictactoe(long j, long o,int k, int L, int H,int p) {
 		this.opposant=o;
@@ -15,11 +16,11 @@ public class Tictactoe extends Tree{
 		this.L=L;
 		this.H=H;
 		this.par=p;
-		full= (1<<(L*(H+1)-1))-1;
+		long g= (1<<(L*(H+1)-1))-1;
 		for (int i=1;i<L;i++){
-			full=full-(1 <<( i*(H+1)-1));
+			g=g-(1 <<( i*(H+1)-1));
 		}
-		
+		this.full=g;
 		
 	}
 
@@ -43,6 +44,7 @@ public class Tictactoe extends Tree{
 						else {
 							Tictactoe e=new Tictactoe(this.joueur ,this.opposant + ((long) 1<<i),k, L, H, -this.par);
 							result.add(e);
+							
 						}
 					}
 				}
