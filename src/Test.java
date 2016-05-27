@@ -13,28 +13,32 @@ public class Test {
 	
 	
 	long truc = bid | bid2;
-	//Tictactoe essai = new Tictactoe( 609,1046 ,3, 3, 3, 1); //match nul
-	//Tictactoe essai = new Tictactoe(82,2084,3, 3, 3, 1); //défaite
+	Tictactoe essai1 = new Tictactoe( 609,1046 ,3, 3, 3, 1); //match nul
+	Tictactoe essai3 = new Tictactoe( 608,1046 ,3, 3, 3, 1);
+	Tictactoe essai4 = new Tictactoe( 607,4 ,3, 3, 3, 1);
+	Tictactoe essai2 = new Tictactoe(82,2084,3, 3, 3, 1); //défaite
 	//Tictactoe essai = new Tictactoe( 0,0,3, 3, 3, 1); //match nul
-	//Tictactoe essai = new Tictactoe( 0,7 ,4, 4, 4, -1); //match nul
-	
+	Tictactoe essai = new Tictactoe( 0,0 ,3, 3, 3, -1); 
+
 	//System.out.println(essai.win());
 	//System.out.println(essai.end());
 
-
+//System.out.println(hachage(essai1));
 	//System.out.println("le résultat par minimax est "+essai.minimax());
 	//System.out.println("le résultat par negamax est "+essai.negamax());
-	//System.out.println("le résultat par Alpha-Beta est "+essai.AlphaBeta(-100, 100));
+	System.out.println("le résultat par Alpha-Betamemo est "+essai.AlphaBetaMemo(-100, 100));
 
-	Tictactoe e=new Tictactoe(66625,34850,4,4,4,1);
-	Puissance4 p=new Puissance4(430081,68614,4,4,-1);	
+//	Tictactoe e=new Tictactoe(66625,34850,4,4,4,1);
+	//Puissance4 p=new Puissance4(430081,68614,4,4,-1);
+	//Puissance4 vide67=new Puissance4(0,0,7,6,1);
+	
 
 	
 	
 //	System.out.println(p.win());
 	//System.out.println(p.end());
 
-	System.out.println("le résultat par Alpha-Beta est "+p.AlphaBeta(-100, 100));
+	//System.out.println("le résultat par Alpha-Beta est "+vide67.AlphaBeta(-100, 100));
 	
 	//test case dispo puissance 4
 /*	long tout=3;

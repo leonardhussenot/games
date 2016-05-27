@@ -4,8 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class Tictactoe extends Tree{
-	long joueur;
-	long opposant;
+
 	final int k, L, H;
 	final long full;
 
@@ -23,6 +22,16 @@ public class Tictactoe extends Tree{
 		this.full=g;
 		
 	}
+	
+	
+
+public  int hachage(){
+	
+	 long h= (joueur+2)*(joueur+2)+(opposant+3)*(opposant+3)*(opposant+3);
+	 h=h % 100;
+	 return (int) h;
+	
+}
 
 	@Override
 	public Collection<? extends Tree> children() {

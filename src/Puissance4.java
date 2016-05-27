@@ -2,8 +2,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class Puissance4 extends Tree{
-	public long joueur;
-	long opposant;
+
 	final int L, H;
 	final long full;  //ici il suffit de voir si toutes les cases du haut sont remplies
 	

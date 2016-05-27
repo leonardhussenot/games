@@ -1,8 +1,17 @@
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.lang.Math;
 abstract class Tree {
 
-	int par;//détermine quel est le joueur qui joue à cette étape
+int par;//détermine quel est le joueur qui joue à cette étape
+public  HashMap< Tree,Memo> map;
+int mapsize;
+static int mapsizemax = 10000;
+ long joueur;
+ long opposant;
+
+
 
 abstract public int  gain() throws ExceptionEnd;
 abstract int win();
@@ -114,7 +123,8 @@ public int AlphaBeta (int alpha, int beta) throws ExceptionEnd {
 			alpha=Math.max(alpha,v);
 			if (beta<=alpha) {break;}
 		}
-
+		System.out.println("alpha vaut "+alpha);
+		System.out.println("beta vaut "+beta);
 		return v;
 	}
 	else {
@@ -122,68 +132,88 @@ public int AlphaBeta (int alpha, int beta) throws ExceptionEnd {
 		int v=10;
 		for (Tree c:this.children()) {
 			v= Math.min(v, c.AlphaBeta(alpha, beta));
-			alpha=Math.min(beta,v);
-			if (beta<=alpha) {break;}
+			beta=Math.min(beta,v);
+			if (beta<=alpha) {System.out.println("breaking");break;}
 		}
-
+		System.out.println("alpha vaut "+alpha);
+		System.out.println("beta vaut "+beta);
 		return v;
 	}
 
 }
 
-    
-    // Deux tentatives de alpha-beta qui ne fonctionnent pas après des tests simples
 
-/*public int AlphaBeta(int alpha, int beta) throws ExceptionEnd {
-	if (this.end()){
-		return this.gain();
-	}
-	else{
-	int best = -10;
-	int v;
-	for (Tree c:this.children()) {
-		v=-c.AlphaBeta(-beta,-alpha);
-		if (v>best) {
-			best=v;
+public int AlphaBetaMemoAux(int alpha,int beta,MyHash map) throws ExceptionEnd{
+	final int alphaini=alpha;
+	final int betaini=beta;
+	
+	final int UPPER=-1;
+	final int LOWER=1;
+	final int ACCURATE=0;
+	Memo mv=map.get(this);
+	if (mv!=null){//ie valeur mémoizée
+	
+		if (mv.intervalle==0){return mv.gain;}  //on avait calculé la valeur exacte
+		if (mv.intervalle==LOWER){					//on avait un intervalle du type [a,+inf[ 
+			if (mv.gain>alpha){return AlphaBetaMemoAux(mv.gain, beta, map);}	//où a était plus grand que alpha
 		}
-		if (best>alpha) {
-				alpha=best;
+		if (mv.intervalle==UPPER){
+			if (mv.gain<beta){return AlphaBetaMemoAux(alpha, mv.gain, map);}
 		}
-		if (alpha>=beta) {
-					break;
+		
+	}	
+	
+	if (this.end()) {return this.gain();}
+
+	if (this.par==1) {
+		
+	int v=-10;
+		for (Tree c:this.children()) {
+			v= Math.max(v, c.AlphaBetaMemoAux(alpha, beta,map));
+			alpha=Math.max(alpha,v);
+			if (beta<=alpha) {break;}
 		}
+		int bound;
+	
+		
+		if( v <= alphaini ) bound = UPPER;
+		else{ if( v >= betaini ) bound = LOWER;
+				else bound = ACCURATE;
+		}
+		map.put(this,new Memo(v,bound,0));
+		return v;
 	}
-	return(best);
+	else {
+	
+		int v=10;
+		for (Tree c:this.children()) {
+			v= Math.min(v, c.AlphaBetaMemoAux(alpha, beta,map));
+			beta=Math.min(beta,v);
+			if (beta<=alpha) {break;}
+		}
+		int bound;
+
+		if( v <= alphaini ) bound = UPPER;
+		else{ if( v >= betaini ) bound = LOWER;
+				else bound = ACCURATE;
+		}
+		map.put(this,new Memo(v,bound,0));
+		
+		return v;
 	}
-}*/
-    /*
+	
+}
 
-public int AlphaBetaTest(int alpha, int beta,int joueur) {
 
-	 int valcurr=-10000;
 
-			if (joueur==-1){
-			 valcurr=1000;
-			 Collection<? extends Tree> children=this.children();
-				for (Tree child:children){
-					valcurr=Math.min(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
-					if (alpha>=valcurr) return valcurr; //coupure alpha
-					beta=Math.min(beta,valcurr);
-				}
-			}
-			if (joueur==1){
-			valcurr=-1000;
-			 Collection<? extends Tree> children=this.children();
-				for (Tree child:children){
-					valcurr=Math.max(valcurr,child.AlphaBetaTest(alpha,beta,-joueur));
-					if (valcurr>=beta) return valcurr; //coupure beta
-					alpha=Math.max(alpha,valcurr);
-				}
-			}
-			return valcurr;
 
-	}
 
-*/
+public int AlphaBetaMemo (int alpha, int beta) throws ExceptionEnd {
+	MyHash map=new MyHash(10000);	
+	return AlphaBetaMemoAux(alpha, beta, map);
+
+}
+
+
 
 }
